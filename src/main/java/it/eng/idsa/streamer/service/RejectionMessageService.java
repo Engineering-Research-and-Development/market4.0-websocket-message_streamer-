@@ -25,7 +25,7 @@ import static de.fraunhofer.iais.eis.util.Util.asList;
 
 public class RejectionMessageService {
 
-    private static final String informationModelVersion = "2.1.0-SNAPSHOT"; //TODO Pom.xml
+    private static final String informationModelVersion = "4.1.1-SNAPSHOT"; //TODO Pom.xml
 
 	public static void sendRejectionMessage(RejectionMessageType rejectionMessageType, Message message) throws Exception {
 		Message rejectionMessage = createRejectionMessage(rejectionMessageType.toString(), message);
