@@ -60,7 +60,6 @@ public class HttpWebSocketServerBean {
     }
 
     public void setup() {
-//        URL url = getClass().getClassLoader().getResource(configuration.getString("server.ssl.key-store"));
         Path pathSSL = Paths.get(configuration.getString("server.ssl.key-store"));
     	logger.info("Creating resource using file {}", pathSSL);
         Resource resource = Resource.newResource(pathSSL);

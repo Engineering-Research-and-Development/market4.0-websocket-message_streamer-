@@ -9,6 +9,7 @@ import it.eng.idsa.multipart.builder.MultipartMessageBuilder;
 import it.eng.idsa.multipart.domain.MultipartMessage;
 import it.eng.idsa.multipart.processor.MultipartMessageProcessor;
 import it.eng.idsa.multipart.util.DateUtil;
+import it.eng.idsa.multipart.util.UtilMessageService;
 import it.eng.idsa.streamer.util.RejectionMessageType;
 
 import java.net.URI;
@@ -24,8 +25,6 @@ import static de.fraunhofer.iais.eis.util.Util.asList;
 
 
 public class RejectionMessageService {
-
-    private static final String informationModelVersion = "4.1.1-SNAPSHOT"; //TODO Pom.xml
 
 	public static void sendRejectionMessage(RejectionMessageType rejectionMessageType, Message message) throws Exception {
 		Message rejectionMessage = createRejectionMessage(rejectionMessageType.toString(), message);
@@ -68,7 +67,7 @@ public class RejectionMessageService {
 		return new ResultMessageBuilder()
 				._issuerConnector_(whoIAm())
 				._issued_(DateUtil.now())
-                ._modelVersion_(informationModelVersion)
+                ._modelVersion_(UtilMessageService.MODEL_VERSION)
 				._recipientConnector_(asList(header.getIssuerConnector()))
 				._correlationMessage_(header.getId())
 				.build();
@@ -78,7 +77,7 @@ public class RejectionMessageService {
 		return new RejectionMessageBuilder()
 				._issuerConnector_(whoIAm())
 				._issued_(DateUtil.now())
-                ._modelVersion_(informationModelVersion)
+                ._modelVersion_(UtilMessageService.MODEL_VERSION)
 				._recipientConnector_(header!=null?asList(header.getIssuerConnector()):asList(URI.create("auto-generated")))
 				._correlationMessage_(header!=null?header.getId():URI.create(""))
 				._rejectionReason_(RejectionReason.MALFORMED_MESSAGE)
@@ -89,7 +88,7 @@ public class RejectionMessageService {
 		return new RejectionMessageBuilder()
 				._issuerConnector_(whoIAm())
 				._issued_(DateUtil.now())
-                ._modelVersion_(informationModelVersion)
+                ._modelVersion_(UtilMessageService.MODEL_VERSION)
 				._recipientConnector_(asList(header.getIssuerConnector()))
 				._correlationMessage_(header.getId())
 				._rejectionReason_(RejectionReason.NOT_AUTHENTICATED)
@@ -106,7 +105,7 @@ public class RejectionMessageService {
 		return new RejectionMessageBuilder()
 				._issuerConnector_(URI.create("auto-generated"))
 				._issued_(DateUtil.now())
-                ._modelVersion_(informationModelVersion)
+                ._modelVersion_(UtilMessageService.MODEL_VERSION)
 				//._recipientConnectors_(header!=null?asList(header.getIssuerConnector()):asList(URI.create("auto-generated")))
 				._correlationMessage_(URI.create("auto-generated"))
 				._rejectionReason_(RejectionReason.MALFORMED_MESSAGE)
@@ -117,7 +116,7 @@ public class RejectionMessageService {
 		return new RejectionMessageBuilder()
 				._issuerConnector_(header.getIssuerConnector())
 				._issued_(DateUtil.now())
-                ._modelVersion_(informationModelVersion)
+                ._modelVersion_(UtilMessageService.MODEL_VERSION)
 				._recipientConnector_(asList(header.getIssuerConnector()))
 				._correlationMessage_(header.getId())
 				._rejectionReason_(RejectionReason.NOT_AUTHENTICATED)
@@ -128,7 +127,7 @@ public class RejectionMessageService {
 		return new RejectionMessageBuilder()
 				._issuerConnector_(header.getIssuerConnector())
 				._issued_(DateUtil.now())
-                ._modelVersion_(informationModelVersion)
+                ._modelVersion_(UtilMessageService.MODEL_VERSION)
 				._recipientConnector_(asList(header.getIssuerConnector()))
 				._correlationMessage_(header.getId())
 				._rejectionReason_(RejectionReason.NOT_FOUND)
