@@ -1,6 +1,10 @@
 
 package it.eng.idsa.streamer.service;
 
+import static de.fraunhofer.iais.eis.util.Util.asList;
+
+import java.net.URI;
+
 import de.fraunhofer.iais.eis.Message;
 import de.fraunhofer.iais.eis.RejectionMessageBuilder;
 import de.fraunhofer.iais.eis.RejectionReason;
@@ -11,10 +15,6 @@ import it.eng.idsa.multipart.processor.MultipartMessageProcessor;
 import it.eng.idsa.multipart.util.DateUtil;
 import it.eng.idsa.multipart.util.UtilMessageService;
 import it.eng.idsa.streamer.util.RejectionMessageType;
-
-import java.net.URI;
-
-import static de.fraunhofer.iais.eis.util.Util.asList;
 
 
 /**
