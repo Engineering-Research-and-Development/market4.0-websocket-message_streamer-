@@ -1,18 +1,22 @@
 package it.eng.idsa.streamer.websocket.receiver.server;
 
+import java.net.BindException;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.util.ResourceBundle;
+
 import org.eclipse.jetty.http.HttpVersion;
-import org.eclipse.jetty.server.*;
+import org.eclipse.jetty.server.HttpConfiguration;
+import org.eclipse.jetty.server.HttpConnectionFactory;
+import org.eclipse.jetty.server.SecureRequestCustomizer;
+import org.eclipse.jetty.server.Server;
+import org.eclipse.jetty.server.ServerConnector;
+import org.eclipse.jetty.server.SslConnectionFactory;
 import org.eclipse.jetty.servlet.ServletContextHandler;
 import org.eclipse.jetty.util.resource.Resource;
 import org.eclipse.jetty.util.ssl.SslContextFactory;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
-import java.net.BindException;
-import java.net.URL;
-import java.nio.file.Path;
-import java.nio.file.Paths;
-import java.util.ResourceBundle;
 
 /**
  * Jetty Server instantiation with WebSocket over SSL
@@ -56,7 +60,7 @@ public class HttpWebSocketServerBean {
     }
 
     public void setup() {
-    	Path pathSSL = Paths.get(configuration.getString("server.ssl.key-store"));
+        Path pathSSL = Paths.get(configuration.getString("server.ssl.key-store"));
     	logger.info("Creating resource using file {}", pathSSL);
         Resource resource = Resource.newResource(pathSSL);
         Path keystorePath = null;
