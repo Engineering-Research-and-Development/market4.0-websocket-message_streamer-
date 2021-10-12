@@ -5,13 +5,6 @@ on: [push]
 jobs:
   build:
     runs-on: ubuntu-latest
-
-    steps:
-      - name: maven-settings-xml-action
-        uses: whelk-io/maven-settings-xml-action@v4
-        with:
-          servers: '[{ "id": "github", "username": "user", "password": "${GH_PACKAGE_REPO_PASSWORD}" }]'
-    
 # Typical Java 11 workflow steps
       - uses: actions/checkout@v2
       - name: Set up JDK 11
@@ -22,5 +15,6 @@ jobs:
       - name: Build with Maven
         run: mvn -B clean package
         env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           GH_PACKAGE_REPO_PASSWORD: ${{ secrets.GH_PACKAGE_REPO_PASSWORD }}
         
