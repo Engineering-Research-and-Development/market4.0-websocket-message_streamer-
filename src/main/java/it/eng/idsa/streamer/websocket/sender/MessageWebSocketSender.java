@@ -1,27 +1,7 @@
 package it.eng.idsa.streamer.websocket.sender;
 
-import de.fraunhofer.iais.eis.Message;
-import it.eng.idsa.multipart.builder.MultipartMessageBuilder;
-import it.eng.idsa.multipart.domain.MultipartMessage;
-import it.eng.idsa.multipart.processor.MultipartMessageProcessor;
-import it.eng.idsa.streamer.WebSocketClientManager;
-import it.eng.idsa.streamer.service.RejectionMessageService;
-import it.eng.idsa.streamer.util.MultiPartMessageServiceUtil;
-import it.eng.idsa.streamer.util.RejectionMessageType;
-import it.eng.idsa.streamer.websocket.sender.client.FileStreamingBean;
-import it.eng.idsa.streamer.websocket.receiver.server.HttpWebSocketServerBean;
-import org.apache.commons.io.IOUtils;
-import org.asynchttpclient.DefaultAsyncHttpClientConfig;
-import org.asynchttpclient.SslEngineFactory;
-import org.asynchttpclient.netty.ssl.JsseSslEngineFactory;
-import org.asynchttpclient.ws.WebSocket;
-import org.asynchttpclient.ws.WebSocketUpgradeHandler;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import static org.asynchttpclient.Dsl.asyncHttpClient;
 
-import javax.net.ssl.SSLContext;
-import javax.net.ssl.TrustManager;
-import javax.net.ssl.X509TrustManager;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.InputStream;
@@ -31,7 +11,28 @@ import java.security.cert.CertificateException;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import static org.asynchttpclient.Dsl.asyncHttpClient;
+import javax.net.ssl.SSLContext;
+import javax.net.ssl.TrustManager;
+import javax.net.ssl.X509TrustManager;
+
+import org.apache.commons.io.IOUtils;
+import org.asynchttpclient.DefaultAsyncHttpClientConfig;
+import org.asynchttpclient.SslEngineFactory;
+import org.asynchttpclient.netty.ssl.JsseSslEngineFactory;
+import org.asynchttpclient.ws.WebSocket;
+import org.asynchttpclient.ws.WebSocketUpgradeHandler;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import de.fraunhofer.iais.eis.Message;
+import it.eng.idsa.multipart.builder.MultipartMessageBuilder;
+import it.eng.idsa.multipart.domain.MultipartMessage;
+import it.eng.idsa.multipart.processor.MultipartMessageProcessor;
+import it.eng.idsa.streamer.WebSocketClientManager;
+import it.eng.idsa.streamer.service.RejectionMessageService;
+import it.eng.idsa.streamer.util.RejectionMessageType;
+import it.eng.idsa.streamer.websocket.receiver.server.HttpWebSocketServerBean;
+import it.eng.idsa.streamer.websocket.sender.client.FileStreamingBean;
 
 /**
  * @author Antonio Scatoloni
@@ -61,17 +62,18 @@ public class MessageWebSocketSender {
             throws Exception {
         InputStream inputStream = new FileInputStream(file);
         String message = IOUtils.toString(inputStream, "UTF8");
-        String header = MultiPartMessageServiceUtil.getHeader(message);
-        String payload = MultiPartMessageServiceUtil.getPayload(message);
+        MultipartMessage mm = MultipartMessageProcessor.parseMultipartMessage(message);
+        String header = mm.getHeaderContentString();
+        String payload = mm.getPayloadContent();
         return doSendMultipartMessageWebSocketOverHttps(header, payload, forwardTo, null);
     }
 
-    public String sendMultipartMessageWebSocketOverHttps(String message, String forwardTo)
-            throws Exception {
-        String header = MultiPartMessageServiceUtil.getHeader(message);
-        String payload = MultiPartMessageServiceUtil.getPayload(message);
-        return doSendMultipartMessageWebSocketOverHttps(header, payload, forwardTo, null);
-    }
+	public String sendMultipartMessageWebSocketOverHttps(String message, String forwardTo) throws Exception {
+		MultipartMessage mm = MultipartMessageProcessor.parseMultipartMessage(message);
+		String header = mm.getHeaderContentString();
+		String payload = mm.getPayloadContent();
+		return doSendMultipartMessageWebSocketOverHttps(header, payload, forwardTo, null);
+	}
 
     public String sendMultipartMessageWebSocketOverHttps(String header, String payload, String forwardTo)
             throws Exception {
