@@ -8,6 +8,13 @@
     <artifactId>websocket-message-streamer</artifactId>
     <version>1.0.16-SNAPSHOT</version>
 
+    <properties>
+        <project.java.version>11</project.java.version>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <information.model.version>4.1.1</information.model.version>
+      	<multipart.message.processor.version>1.0.16</multipart.message.processor.version>
+    </properties>
+    
 	<repositories>
 		<repository>
 			<id>snapshots</id>
@@ -32,16 +39,15 @@
 	      <name>GitHub Packages</name>
 	       <url>https://maven.pkg.github.com/Engineering-Research-and-Development/true-connector-websocket_message_streamer</url>
 	    </repository>
-	    
   	</distributionManagement>
+  	
+  	<scm>
+		<connection>scm:git:git://github.com/Engineering-Research-and-Development/true-connector-websocket_message_streamer.git</connection>
+		<developerConnection>scm:git:git@github.com:Engineering-Research-and-Development/true-connector-websocket_message_streamer.git</developerConnection>
+		<url>https://github.com/Engineering-Research-and-Development/true-connector-websocket_message_streamer.git</url>
+		<tag>HEAD</tag>
+	</scm>
 
-    <properties>
-        <project.java.version>11</project.java.version>
-        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <information.model.version>4.1.1</information.model.version>
-      	<multipart.message.processor.version>1.0.15-SNAPSHOT</multipart.message.processor.version>
-    </properties>
-    
     <dependencies>
         <dependency>
             <groupId>org.asynchttpclient</groupId>
@@ -118,31 +124,28 @@
 			    </configuration>
 			</plugin>
             <plugin>
-                <artifactId>maven-jar-plugin</artifactId>
-                <version>2.4</version>
-            </plugin>
-            <!-- 
-            <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-shade-plugin</artifactId>
-                <version>2.4.3</version>
-                <executions>
-                    <execution>
-                        <phase>package</phase>
-                        <goals>
-                            <goal>shade</goal>
-                        </goals>
-                        <configuration>
-                            <artifactSet>
-                                <excludes>
-                                    <exclude>log4j:log4j:jar:</exclude>
-                                </excludes>
-                            </artifactSet>
-                        </configuration>
-                    </execution>
-                </executions>
+				<artifactId>maven-jar-plugin</artifactId>
+				<version>3.2.0</version>
             </plugin>
-             -->
+            <plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-surefire-plugin</artifactId>
+				<version>2.22.0</version>
+				<dependencies>
+					<dependency>
+						<groupId>org.junit.platform</groupId>
+						<artifactId>junit-platform-surefire-provider</artifactId>
+						<version>1.2.0</version>
+					</dependency>
+				</dependencies>
+				<configuration>
+				 	<argLine>-Dfile.encoding=UTF-8</argLine>
+					<additionalClasspathElements>
+						<additionalClasspathElement>src/test/java/</additionalClasspathElement>
+					</additionalClasspathElements>
+				</configuration>
+			</plugin>
         </plugins>
     </build>
 </project>
