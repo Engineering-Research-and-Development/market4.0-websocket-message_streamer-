@@ -9,7 +9,9 @@ import org.eclipse.jetty.websocket.servlet.WebSocketServletFactory;
  */
 public class HttpWebSocketMessagingServlet extends WebSocketServlet {
 
-    @Override
+	private static final long serialVersionUID = -4068764396894813783L;
+
+	@Override
     public void configure(WebSocketServletFactory factory) {
        factory.register(HttpWebSocketListenerServer.class);
     }
