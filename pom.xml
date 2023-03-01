@@ -4,7 +4,7 @@
 
     <groupId>it.eng.idsa</groupId>
     <artifactId>websocket-message-streamer</artifactId>
-    <version>1.0.16</version>
+    <version>1.0.17-SNAPSHOT</version>
 
     <properties>
         <project.java.version>11</project.java.version>
@@ -43,7 +43,7 @@
 		<connection>scm:git:git://github.com/Engineering-Research-and-Development/true-connector-websocket_message_streamer.git</connection>
 		<developerConnection>scm:git:git@github.com:Engineering-Research-and-Development/true-connector-websocket_message_streamer.git</developerConnection>
 		<url>https://github.com/Engineering-Research-and-Development/true-connector-websocket_message_streamer.git</url>
-		<tag>1.0.16</tag>
+		<tag>HEAD</tag>
 	</scm>
 
     <dependencies>
