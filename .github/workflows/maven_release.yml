@@ -39,6 +39,7 @@ jobs:
       env:
         GITHUB_USERNAME: ${{ github.actor }}
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        GH_PACKAGE_REPO_PASSWORD: ${{ secrets.GH_PACKAGE_REPO_PASSWORD }}
       run: |
         mvn -B -Dtag=${{ github.event.inputs.tagVersion }} release:prepare \
         -DreleaseVersion=${{ github.event.inputs.releaseVersion }} \
