@@ -66,7 +66,7 @@ public class RejectionMessageService {
 	private static Message createResultMessage(Message header) {
 		return new ResultMessageBuilder()
 				._issuerConnector_(whoIAm())
-				._issued_(DateUtil.now())
+				._issued_(DateUtil.normalizedDateTime())
                 ._modelVersion_(UtilMessageService.MODEL_VERSION)
 				._recipientConnector_(asList(header.getIssuerConnector()))
 				._correlationMessage_(header.getId())
@@ -76,7 +76,7 @@ public class RejectionMessageService {
 	private static Message createRejectionMessageCommon(Message header) {
 		return new RejectionMessageBuilder()
 				._issuerConnector_(whoIAm())
-				._issued_(DateUtil.now())
+				._issued_(DateUtil.normalizedDateTime())
                 ._modelVersion_(UtilMessageService.MODEL_VERSION)
 				._recipientConnector_(header!=null?asList(header.getIssuerConnector()):asList(URI.create("auto-generated")))
 				._correlationMessage_(header!=null?header.getId():URI.create(""))
@@ -87,7 +87,7 @@ public class RejectionMessageService {
 	private static Message createRejectionToken(Message header) {
 		return new RejectionMessageBuilder()
 				._issuerConnector_(whoIAm())
-				._issued_(DateUtil.now())
+				._issued_(DateUtil.normalizedDateTime())
                 ._modelVersion_(UtilMessageService.MODEL_VERSION)
 				._recipientConnector_(asList(header.getIssuerConnector()))
 				._correlationMessage_(header.getId())
@@ -104,7 +104,7 @@ public class RejectionMessageService {
 	private static Message createRejectionMessageLocalIssues(Message header) {
 		return new RejectionMessageBuilder()
 				._issuerConnector_(URI.create("auto-generated"))
-				._issued_(DateUtil.now())
+				._issued_(DateUtil.normalizedDateTime())
                 ._modelVersion_(UtilMessageService.MODEL_VERSION)
 				//._recipientConnectors_(header!=null?asList(header.getIssuerConnector()):asList(URI.create("auto-generated")))
 				._correlationMessage_(URI.create("auto-generated"))
@@ -115,7 +115,7 @@ public class RejectionMessageService {
 	private static Message createRejectionTokenLocalIssues(Message header) {
 		return new RejectionMessageBuilder()
 				._issuerConnector_(header.getIssuerConnector())
-				._issued_(DateUtil.now())
+				._issued_(DateUtil.normalizedDateTime())
                 ._modelVersion_(UtilMessageService.MODEL_VERSION)
 				._recipientConnector_(asList(header.getIssuerConnector()))
 				._correlationMessage_(header.getId())
@@ -126,7 +126,7 @@ public class RejectionMessageService {
 	private static Message createRejectionCommunicationLocalIssues(Message header) {
 		return new RejectionMessageBuilder()
 				._issuerConnector_(header.getIssuerConnector())
-				._issued_(DateUtil.now())
+				._issued_(DateUtil.normalizedDateTime())
                 ._modelVersion_(UtilMessageService.MODEL_VERSION)
 				._recipientConnector_(asList(header.getIssuerConnector()))
 				._correlationMessage_(header.getId())
