@@ -4,7 +4,7 @@
 
     <groupId>it.eng.idsa</groupId>
     <artifactId>websocket-message-streamer</artifactId>
-    <version>1.0.18-SNAPSHOT</version>
+    <version>1.0.19-SNAPSHOT</version>
 
     <properties>
         <project.java.version>11</project.java.version>
